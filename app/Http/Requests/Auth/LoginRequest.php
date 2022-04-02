@@ -30,7 +30,8 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => 'required|string|email|max:255',
-            'password' => 'required|string|min:2',
+            'password' => 'required_without_all:firebase_uuid|string|min:2',
+            'firebase_uuid' => 'required_without_all:password|string|min:8'
         ];
     }
 

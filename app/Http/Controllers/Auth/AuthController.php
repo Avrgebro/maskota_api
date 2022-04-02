@@ -18,16 +18,16 @@ class AuthController extends Controller
 
     public function login (LoginRequest $request) {
 
-        if(!$request->authenticate()){
+        if(($request->has(['firebase_uuid']) && !User::where('firebase_uuid', $request->firebase_uuid)->exists()) || ($request->has(['password']) && !$request->authenticate())){
             return $this->error([], 'Incorrect credentials', 401);
         } else {
-            $user = $request->user();
+            $user = $request->has(['firebase_uuid']) ? User::where('firebase_uuid', $request->firebase_uuid)->first() : $request->user();
 
             $token = $user->createToken('API Token ' . Str::random(10));
 
             return $this->success([
                 'user' => $user,
-                'token' => $this->token($token->plainTextToken),
+                'token' => $token->plainTextToken,
             ], 'User Logged In', 200);
         }
 
@@ -48,7 +48,8 @@ class AuthController extends Controller
             'email' => ['required', 'unique:users', 'email:rfc'],
             'phone' => ['required', 'unique:users', 'min:9'],
             'birthday' => ['required', 'date'],
-            'password' => ['required', 'confirmed', Password::min(8)->mixedCase()->letters()->numbers()],
+            'password' => ['required_without_all:firebase_uuid', 'confirmed', Password::min(8)->mixedCase()->letters()->numbers()],
+            'firebase_uuid' => ['required_without_all:password', 'unique:users', 'min:8']
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -63,6 +64,7 @@ class AuthController extends Controller
             'm_lastname' => $request->m_lastname,
             'email' => $request->email,
             'phone' => $request->phone,
+            'firebase_uuid' => $request->firebase_uuid,
             'birthday' => \Carbon\Carbon::createFromFormat('Y-m-d', $request->birthday),
             'password' => Hash::make($request->password),
             'remember_token' => Str::random(10)
@@ -72,7 +74,7 @@ class AuthController extends Controller
         $token = $user->createToken('API Token ' . Str::random(10));
         return $this->success([
             'user' => $user,
-            'token' => $this->token($token->plainTextToken)
+            'token' => $token->plainTextToken
         ], 'User successfully registered', 200);
 
     }

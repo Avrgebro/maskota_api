@@ -29,7 +29,7 @@ Route::group(['middleware' => ['cors', 'json.response']], function(){
 
     });
 
-    Route::middleware('auth:api')->group(function () {
+    Route::middleware('auth:sanctum')->group(function () {
         Route::post('/auth/logout', [AuthController::class, 'logout'])->name('logout.api');
 
     });
