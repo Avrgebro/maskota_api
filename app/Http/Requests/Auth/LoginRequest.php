@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Auth\Events\Lockout;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
@@ -19,6 +20,17 @@ class LoginRequest extends FormRequest
     public function authorize()
     {
         return true;
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $response = response()->json([
+			'status' => 'error',
+			'message' => 'Invalid request',
+			'data' => $validator->errors()
+		], 422);
+        
+        throw new ValidationException($validator, $response);
     }
 
     /**
