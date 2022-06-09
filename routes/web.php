@@ -16,6 +16,6 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     
-    if(env('APP_ENV') == 'local') return Inertia::render('ComingSoon');
+    if(env('APP_ENV') == 'production') return Inertia::render('ComingSoon');
     return Inertia::render('Welcome');
 });
