@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: 'Raleway';
+    src: local('Roboto'), url(./fonts/Raleway-Italic-VariableFont_wght.ttf) format('ttf');
+  }

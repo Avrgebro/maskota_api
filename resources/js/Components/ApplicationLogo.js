@@ -2,6 +2,9 @@ import React from 'react';
 
 export default function ApplicationLogo({ className }) {
     return (
-        <img className='w-40 h-auto' src='/img/psa_logo.svg'/>
+        <div className='flex space-x-2'>
+            <img className='w-auto h-20' src='/img/logo.png'/>
+            <p className='my-auto text-2xl font-semibold'>Allqu</p>
+        </div>
     );
 }
