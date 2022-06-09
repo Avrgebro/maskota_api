@@ -6,6 +6,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Api Default Version
+    |--------------------------------------------------------------------------
+    |
+    | This value is the default version used by the app if the client does not
+    | provide a version in their api requests
+    |
+    */
+
+    'api_latest' => env('API_DEFAULT_VERSION', '1'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
     |
