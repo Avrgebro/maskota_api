@@ -2,22 +2,19 @@ import React from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
 import { Link } from '@inertiajs/inertia-react';
 import Flash from "@/Components/Shared/Flash";
+import NavBar from '../Components/NavBar';
 
 
-export default function Guest({ children }) {
+export default function Public({ children }) {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F6D365] to-[#FDA085] text-white">
-            <nav className="max-w-7xl mx-auto flex justify-between px-2 md:px-8 py-2">
-                <ApplicationLogo />
-
-                <div className='flex space-x-8 my-auto'>
-                    <Link>Home</Link>
-                    <Link>Nosotros</Link>
-                    <Link>Contacto</Link>
-
-                </div>
-            </nav>
-            <main className='max-w-7xl mx-auto'>{children}</main>
+        <div className="min-h-screen bg-gray-100 relative overflow-hidden z-10">
+            <div className='max-w-7xl mx-auto'>
+                <NavBar />
+                <main className='py-12'>
+                    {children}
+                </main>
+            </div>
+            <div className='absolute rotate-45 -top-[300px] -right-[800px] lg:-right-[300px] h-[900px] w-[900px] lg:h-[1200px] lg:w-[1200px] rounded-[9rem] bg-gradient-to-b from-blue-500 to-[#02caf5] -z-10'></div>
         </div>
     );
 }
