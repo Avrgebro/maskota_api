@@ -14,10 +14,11 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('f_lastname');
-            $table->string('m_lastname');
+            $table->string('lastname');
             $table->string('phone')->unique();
             $table->string('firebase_uuid')->unique();
+            $table->unsignedBigInteger('country_id');
+            $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
             $table->date('birthday');
 
         });

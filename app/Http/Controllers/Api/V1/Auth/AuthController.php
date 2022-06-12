@@ -43,11 +43,11 @@ class AuthController extends Controller
 
         $rules = [
             'name' => ['required'],
-            'f_lastname' => ['required'],
-            'm_lastname' => ['required'],
+            'lastname' => ['required'],
             'email' => ['required', 'unique:users', 'email:rfc'],
             'phone' => ['required', 'unique:users', 'min:9'],
             'birthday' => ['required', 'date'],
+            'country' => ['required'],
             'password' => ['required_without_all:firebase_uuid', 'confirmed', Password::min(8)->mixedCase()->letters()->numbers()],
             'firebase_uuid' => ['required_without_all:password', 'unique:users', 'min:8']
         ];
@@ -60,8 +60,7 @@ class AuthController extends Controller
 
         $data_array = [
             'name' => $request->name,
-            'f_lastname' => $request->f_lastname,
-            'm_lastname' => $request->m_lastname,
+            'lastname' => $request->lastname,
             'email' => $request->email,
             'phone' => $request->phone,
             'firebase_uuid' => $request->firebase_uuid,
