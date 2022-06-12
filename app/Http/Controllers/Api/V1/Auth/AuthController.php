@@ -47,9 +47,9 @@ class AuthController extends Controller
             'email' => ['required', 'unique:users', 'email:rfc'],
             'phone' => ['required', 'unique:users', 'min:9'],
             'birthday' => ['required', 'date'],
-            'country' => ['required'],
+            'country_id' => ['required'],
             'password' => ['required_without_all:firebase_uuid', 'confirmed', Password::min(8)->mixedCase()->letters()->numbers()],
-            'firebase_uuid' => ['required_without_all:password', 'unique:users', 'min:8']
+            'firebase_uuid' => ['required', 'unique:users', 'min:8']
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -63,6 +63,7 @@ class AuthController extends Controller
             'lastname' => $request->lastname,
             'email' => $request->email,
             'phone' => $request->phone,
+            'country_id' => $request->country_id,
             'firebase_uuid' => $request->firebase_uuid,
             'birthday' => \Carbon\Carbon::createFromFormat('Y-m-d', $request->birthday),
             'password' => Hash::make($request->password),
